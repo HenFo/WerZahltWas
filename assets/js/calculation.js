@@ -96,6 +96,24 @@ function reset() {
     document.getElementById("inputList").innerHTML = "";
 }
 
+function saveToFile() {
+    var str = "";
+    for (var i = 0; i < namen.length; i++) {
+        str += namen[i] + "," + bezahlungen[i] + ";";
+    }
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(str));
+    element.setAttribute('download', 'Wer_Hat_Was_gezahlt.txt');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
 $(document).ready(function () {
     $("#QuickInputButton").click(function () {
         $("#quickInput").toggle();
