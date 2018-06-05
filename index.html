@@ -9,13 +9,24 @@
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="assets/js/calculation.js"></script>
 
 </head>
 
 <body style="margin-left:20px;">
-    <h1 style="margin-bottom:60px;margin-top:30px;">Wer zahlt was?</h1>
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+            <div class="container">
+                <a class="navbar-brand" href="#">Wer zahlt was?</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse"
+                     id="navcol-1">
+                    <ul class="nav navbar-nav mr-auto"></ul><span class="navbar-text actions"> <a class="btn btn-light action-button" role="button" href="#" id="openFile">Open File</a><a class="btn btn-light action-button" role="button" href="#" id="saveFile">Save File</a></span>
+                </div>
+            </div>
+        </nav>
+    </div>
     <button id="QuickInputButton" class="btn btn-primary" type="button">Schnelle Eingabe öffnen<br></button>
     <div id="quickInput" style="display:none">
         <div class="container" style="margin-left:0px;">
