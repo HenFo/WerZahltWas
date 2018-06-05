@@ -96,10 +96,38 @@ function reset() {
     document.getElementById("inputList").innerHTML = "";
 }
 
+window.onload = function() {
+    var fileInput = document.getElementById('fileInput');
+    fileInput.addEventListener('change', function (e) {
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var data = reader.result;
+            convert(data);
+        }
+        reader.readAsText(file);
+    });
+}
+
+function convert(data) {
+    var people = data.split(";")
+    var retName = [];
+    var retBezahlung = [];
+    for (var i=0; i < people.length; i++) {
+        retName.push(people[i].split(",")[0]);
+        retBezahlung.push(people[i].split(",")[1]);
+    }
+    
+}
+
 function saveToFile() {
     var str = "";
     for (var i = 0; i < namen.length; i++) {
-        str += namen[i] + "," + bezahlungen[i] + ";";
+        if (i == namen.length - 1) {
+            str += namen[i] + "," + bezahlungen[i];
+        } else {
+            str += namen[i] + "," + bezahlungen[i] + ";";
+        }
     }
 
     var element = document.createElement('a');
