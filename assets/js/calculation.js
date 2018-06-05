@@ -111,13 +111,12 @@ window.onload = function() {
 
 function convert(data) {
     var people = data.split(";")
-    var retName = [];
-    var retBezahlung = [];
     for (var i=0; i < people.length; i++) {
-        retName.push(people[i].split(",")[0]);
-        retBezahlung.push(people[i].split(",")[1]);
+        document.getElementById("Name").value = people[i].split(",")[0];
+        document.getElementById("bezahlt").value = people[i].split(",")[1];
+        add();
     }
-    
+    calculateDistrebution();
 }
 
 function saveToFile() {
