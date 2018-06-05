@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wer zahlt was</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/js/calculation.js"></script>
+
+</head>
+
+<body style="margin-left:20px;">
+    <h1 style="margin-bottom:60px;margin-top:30px;">Wer zahlt was?</h1>
+    <button id="QuickInputButton" class="btn btn-primary" type="button">Schnelle Eingabe öffnen<br></button>
+    <div id="quickInput" style="display:none">
+        <div class="container" style="margin-left:0px;">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" onclick="quickInputName()" type="button" style="background-color:rgb(143,0,255);border-color:inherit;">Pseudo - Person&nbsp;<i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary Euro" onclick="quickInputGeld(1.0)" type="button" style="background-color:rgb(171,171,171);border-color:inherit;">1€</button>
+                    <button class="btn btn-primary Euro" onclick="quickInputGeld(2.0)" type="button" style="background-color:rgb(255,198,51);border-color:inherit;">2€</button>
+                    <button class="btn btn-primary Euro" onclick="quickInputGeld(5.0)" type="button" style="background-color:rgb(163,214,165);border-color:inherit;">5€</button>
+                    <button class="btn btn-primary Euro" onclick="quickInputGeld(10.0)" type="button" style="background-color:rgb(255,92,0);border-color:inherit;">10€</button>
+                    <button class="btn btn-primary Euro" onclick="quickInputGeld(20.0)" type="button" style="background-color:rgb(93,171,255);border-color:inherit;">20€</button>
+                    <button class="btn btn-primary Euro" onclick="quickInputGeld(50.0)" type="button" style="background-color:rgb(255,153,0);border-color:inherit;">50€</button>
+                    <button class="btn btn-primary Euro" onclick="quickInputGeld(100.0)" type="button" style="background-color:rgb(66,176,56);border-color:inherit;">100€</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p style="margin-left:10px;margin-bottom:7px;">Hier Name und wie viel diese Person bezahlt hat eingeben. Danach hinzufügen:</p>
+    <div class="input">
+        <input type="text" name="name" placeholder="Name" autofocus="" autocomplete="on" id="Name">
+        <input type="number" name="bezahlt" step="0.1" placeholder="hat bezahlt" id="bezahlt" class="bezahlt">
+    </div>
+        <button class="btn btn-primary" onclick="add()" type="button" id="addToList" style="margin-top:10px;">Eingabe zur Liste hinzufügen</button>
+        <!--<button class="btn btn-primary" onclick="calculateDistrebution()" type="button" id="calculate" style="margin-top:10px;">Verteilung ausrechnen</button>-->
+    <div style="margin-top: 10px">
+        <div class="col" id="inputList"></div>
+    </div>
+    <div id="tabelleVerteilung" class="tabelle" style="margin-top:32px; display:none">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>bekommt von:</th>
+                    </tr>
+                </thead>
+                <tbody id="verteilung"></tbody>
+            </table>
+        </div>
+        <button class="btn btn-primary reset" id="reset" type="button" onclick="reset()">Reset</button>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    
+</body>
+
+</html>
