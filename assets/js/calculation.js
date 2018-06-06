@@ -104,6 +104,8 @@ window.onload = function() {
         reader.onload = function (e) {
             var data = reader.result;
             convert(data);
+            calculateDistrebution();
+            $("#tabelleVerteilung").show();
         }
         reader.readAsText(file);
     });
@@ -116,7 +118,6 @@ function convert(data) {
         document.getElementById("bezahlt").value = people[i].split(",")[1];
         add();
     }
-    calculateDistrebution();
 }
 
 function saveToFile() {
@@ -143,7 +144,7 @@ function saveToFile() {
 
 $(document).ready(function () {
     $("#QuickInputButton").click(function () {
-        $("#quickInput").toggle();
+        $("#quickInput").slideToggle();
     });
 });
 
