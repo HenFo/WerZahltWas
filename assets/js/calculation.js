@@ -96,9 +96,55 @@ function reset() {
     document.getElementById("inputList").innerHTML = "";
 }
 
+window.onload = function() {
+    var fileInput = document.getElementById('fileInput');
+    fileInput.addEventListener('change', function (e) {
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var data = reader.result;
+            convert(data);
+            calculateDistrebution();
+            $("#tabelleVerteilung").show();
+        }
+        reader.readAsText(file);
+    });
+}
+
+function convert(data) {
+    var people = data.split(";")
+    for (var i=0; i < people.length; i++) {
+        document.getElementById("Name").value = people[i].split(",")[0];
+        document.getElementById("bezahlt").value = people[i].split(",")[1];
+        add();
+    }
+}
+
+function saveToFile() {
+    var str = "";
+    for (var i = 0; i < namen.length; i++) {
+        if (i == namen.length - 1) {
+            str += namen[i] + "," + bezahlungen[i];
+        } else {
+            str += namen[i] + "," + bezahlungen[i] + ";";
+        }
+    }
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(str));
+    element.setAttribute('download', 'Wer_Hat_Was_gezahlt.txt');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
 $(document).ready(function () {
     $("#QuickInputButton").click(function () {
-        $("#quickInput").toggle();
+        $("#quickInput").slideToggle();
     });
 });
 
