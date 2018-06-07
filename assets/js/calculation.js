@@ -36,7 +36,7 @@ function calculateDistrebution() {
     for (var i = 0; i < namen.length; i++) {
         if (namen[i] != "deleted") {
             var bekommt = [];
-            var aufteilung = bezahlungen[i] / namen.length;
+            var aufteilung = bezahlungen[i] / (namen.length - deleted);
             for (var j = 0; j < namen.length; j++) {
                 if (namen[j] != "deleted") {
                     var wuerdeBekommen = bezahlungen[j] / (namen.length - deleted);
@@ -94,7 +94,7 @@ function reset() {
     bezahlungen = [];
     namen = [];
     personen = 1;
-    berechnet = false;
+    deleted = 0;
     document.getElementById("Name").value = "";
     document.getElementById("bezahlt").value = "";
     document.getElementById("verteilung").innerHTML = "";
