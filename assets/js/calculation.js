@@ -31,29 +31,35 @@ function add() {
     calculateDistrebution();
 }
 
-var berechnet = false;
 function calculateDistrebution() {
     document.getElementById("verteilung").innerHTML = "";
     for (var i = 0; i < namen.length; i++) {
-        var bekommt = [];
-        var aufteilung = bezahlungen[i] / namen.length;
-        for (var j = 0; j < namen.length; j++) {
-            var wuerdeBekommen = bezahlungen[j] / namen.length;
-            var bezahlt = aufteilung - wuerdeBekommen;
-            if (bezahlt >= 0) {
-                bekommt.push(Math.floor(100 * bezahlt) / 100);
-            } else {
-                bekommt.push(0);
+        if (namen[i] != "deleted") {
+            var bekommt = [];
+            var aufteilung = bezahlungen[i] / namen.length;
+            for (var j = 0; j < namen.length; j++) {
+                if (namen[j] != "deleted") {
+                    var wuerdeBekommen = bezahlungen[j] / (namen.length - deleted);
+                    var bezahlt = aufteilung - wuerdeBekommen;
+                    if (bezahlt >= 0) {
+                        bekommt.push(Math.floor(100 * bezahlt) / 100);
+                    } else {
+                        bekommt.push(0);
+                    }
+                } else {
+                    bekommt.push(null);
+                }
             }
-        }
-        document.getElementById("verteilung").innerHTML += "<tr id='" + namen[i] +"Line'><td>" + namen[i] + " hat " + bezahlungen[i]+" Euro bezahlt"+ "</td > <td id='" + namen[i] +"'></td></tr > ";
-        for (var j = 0; j < namen.length; j++) {
-            if (namen[i] != namen[j]) {
-                document.getElementById(namen[i]).innerHTML += namen[j] + ": " + bekommt[j] + " Euro <br/>";
+            document.getElementById("verteilung").innerHTML += "<tr id='" + namen[i] + "Line'><td>" + namen[i] + " hat " + bezahlungen[i] + " Euro bezahlt" + "</td > <td id='" + namen[i] + "'></td></tr > ";
+            for (var j = 0; j < namen.length; j++) {
+                if (namen[j] != "deleted") {
+                    if (namen[i] != namen[j]) {
+                        document.getElementById(namen[i]).innerHTML += namen[j] + ": " + bekommt[j] + " Euro <br/>";
+                    }
+                }
             }
         }
     }
-    berechnet = true;
 }
 
 var personen = 1;
@@ -69,23 +75,25 @@ function quickInputGeld(Geld) {
     }
 }
 
+var deleted = 0;
 function remove(namePos, InputId, geld) {
     bezahlungen[namePos] -= geld;
     var name = namen[namePos] + "Line";
-
+    if (bezahlungen[namePos] <= 0) {
+        namen[namePos] = "deleted";
+    }
     var element = document.getElementById("list" + InputId);
     element.parentNode.removeChild(element);
-    if (berechnet) {
-        element = document.getElementById(name);
-        element.parentNode.removeChild(element);
-        calculateDistrebution();
-    }
+    element = document.getElementById(name);
+    element.parentNode.removeChild(element);
+    deleted++;
+    calculateDistrebution();
 }
 
 function reset() {
     bezahlungen = [];
     namen = [];
-    personen = 0;
+    personen = 1;
     berechnet = false;
     document.getElementById("Name").value = "";
     document.getElementById("bezahlt").value = "";
