@@ -56,9 +56,9 @@ function calculateDistrebution() {
     berechnet = true;
 }
 
-var personen = 0;
+var personen = 1;
 function quickInputName() {
-    document.getElementById("Name").value = "Person" + personen++;
+    document.getElementById("Name").value = "Person " + personen++;
 }
 
 function quickInputGeld(Geld) {
@@ -72,10 +72,7 @@ function quickInputGeld(Geld) {
 function remove(namePos, InputId, geld) {
     bezahlungen[namePos] -= geld;
     var name = namen[namePos] + "Line";
-    if (bezahlungen[namePos] <= 0) {
-        namen.splice(namePos, 1);
-        bezahlungen.splice(namePos, 1);
-    }
+
     var element = document.getElementById("list" + InputId);
     element.parentNode.removeChild(element);
     if (berechnet) {
