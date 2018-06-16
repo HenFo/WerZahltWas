@@ -66,12 +66,17 @@ function quickInputGeld(Geld) {
     }
 }
 
-var deleted = 0;
+/**
+ * entfernt die darstelung
+ * @param {String} namePos Position der Person in der Liste
+ * @param {any} InputId ID des zu entfernenden Eintrags in der InputList
+ * @param {Float} geld der zu entfernende Betrag
+ */
 function remove(namePos, InputId, geld) {
-    bezahlungen[namePos] -= geld;
-    var name = namen[namePos] + "Line";
-    if (bezahlungen[namePos] <= 0) {
-        namen[namePos] = "deleted";
+    zPersonen[namePos].addGeld(-geld);
+    var name = zPersonen[namePos].name() + "Line";
+    if (zPersonen[namePos].geld() <= 0) {
+        zPersonen[namePos].delete();
     }
     var element = document.getElementById("list" + InputId);
     element.parentNode.removeChild(element);

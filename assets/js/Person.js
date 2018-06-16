@@ -27,4 +27,8 @@ class Person {
     isEqual(pPerson) {
         return pPerson.name() == this.name ? true : false;
     }
+
+    delet() {
+        this.deleted = true;
+    }
 }
