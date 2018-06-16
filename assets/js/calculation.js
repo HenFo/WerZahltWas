@@ -11,10 +11,10 @@ function add() {
     }
 
     if (!hVorhanden) {
-        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + hPerson.name() + " hat " + hPerson.geld() + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hPerson.geld() + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + hPerson.name() + " hat " + hPerson.geld() + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld() + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
     } else {
         zPersonen[i].addGeld(document.getElementById("bezahlt").value);
-        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + zPersonen[i].name() + " hat noch " + hPerson.geld() + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hPerson.geld() + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + zPersonen[i].name() + " hat noch " + hPerson.geld() + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld() + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
     }
     zIds++;
     document.getElementById("Name").value = "";
@@ -87,8 +87,7 @@ function remove(namePos, InputId, geld) {
 }
 
 function reset() {
-    bezahlungen = [];
-    namen = [];
+    zPersonen = [];
     personen = 1;
     deleted = 0;
     document.getElementById("Name").value = "";
@@ -125,9 +124,9 @@ function saveToFile() {
     var str = "";
     for (var i = 0; i < namen.length; i++) {
         if (i == namen.length - 1) {
-            str += namen[i] + "," + bezahlungen[i];
+            str += zPersonen[i].name() + "," + zPersonen[i].geld();
         } else {
-            str += namen[i] + "," + bezahlungen[i] + ";";
+            str += zPersonen[i].name() + "," + zPersonen[i].geld() + ";";
         }
     }
 

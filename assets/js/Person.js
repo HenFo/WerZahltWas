@@ -2,33 +2,42 @@
 
 class Person {
     constructor(pName, pGeld) {
-        this.name = pName;
-        this.geld = parseFloat(pGeld);
+        this._name = pName;
+        this._geld = parseFloat(pGeld);
         this.bekommt = [];
         this.deleted = false;
     }
 
     get name() {
-        return this.name;
+        return this._name;
     }
 
     get geld() {
-        return this.geld;
+        return this._geld;
     }
 
     get isDeleted() {
         return this.deleted;
     }
 
-    addGeld(pGeld) {
-        this.geld += parseFloat(pGeld);
+    set name(pName) {
+        this._name = pName;
     }
 
-    isEqual(pPerson) {
-        return pPerson.name() == this.name ? true : false;
+    set geld(pGeld) {
+        this._geld = pGeld;
     }
 
     delet() {
         this.deleted = true;
     }
+
+    addGeld(pGeld) {
+        this._geld += parseFloat(pGeld);
+    }
+
+    isEqual(pPerson) {
+        return pPerson.name() == this._name ? true : false;
+    }
+
 }
