@@ -15,6 +15,10 @@ class Person {
     }
 
     addGeld(pGeld) {
-        this.geld += pGeld;
+        this.geld += parseFloat(pGeld);
+    }
+
+    isEqual(pPerson) {
+        return pPerson.name() == this.name ? true : false;
     }
 }

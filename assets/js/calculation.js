@@ -1,5 +1,27 @@
 "use strict";
 
+var zPersonen = [];
+var zIds = 0;
+function add() {
+    var hPerson = new Person(document.getElementById("Name").value, document.getElementById("bezahlt").value);
+
+    var i = 0, hVorhanden = false;
+    while (i < zPersonen.length && !hVorhanden) {
+        hVorhanden = hPerson.isEqual(zPersonen[i]);
+    }
+
+    if (!hVorhanden) {
+        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + hPerson.name() + " hat " + hPerson.geld + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+    } else {
+        zPersonen[i].addGeld(document.getElementById("bezahlt").value);
+        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + zPersonen[i].name + " hat noch " + hPerson.geld + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+    }
+    zIds++;
+    document.getElementById("Name").value = "";
+    document.getElementById("bezahlt").value = "";
+    calculateDistrebution();
+}
+
 var bezahlungen = [];
 var namen = [];
 var ids = 0;
