@@ -11,10 +11,10 @@ function add() {
     }
 
     if (!hVorhanden) {
-        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + hPerson.name() + " hat " + hPerson.geld + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + hPerson.name() + " hat " + hPerson.geld() + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hPerson.geld() + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
     } else {
         zPersonen[i].addGeld(document.getElementById("bezahlt").value);
-        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + zPersonen[i].name + " hat noch " + hPerson.geld + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + zPersonen[i].name() + " hat noch " + hPerson.geld() + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hPerson.geld() + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
     }
     zIds++;
     document.getElementById("Name").value = "";
@@ -22,67 +22,36 @@ function add() {
     calculateDistrebution();
 }
 
-var bezahlungen = [];
-var namen = [];
-var ids = 0;
-function add() {
-    var hName = document.getElementById("Name").value;
-    var hGeld = parseFloat(document.getElementById("bezahlt").value);
-    if (hName != "" && !isNaN(hGeld)) {
-        var vorhanden = false;
-        var i = 0;
-        while (!vorhanden && i < namen.length) {
-            if (hName == namen[i]) 
-                vorhanden = true;
-            else
-                i++;
-        }
-        if (!vorhanden) {
-            bezahlungen.push(hGeld);
-            namen.push(hName);
-
-            document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + hName + " hat " + hGeld + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove("+i+","+ ids + "," + hGeld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
-        } else {
-            bezahlungen[i] += parseFloat(document.getElementById("bezahlt").value);
-            document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + ids + "'>" + hName + " hat noch " + hGeld + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + ids + "," + hGeld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
-        }
-        ids++;
-    }
-    document.getElementById("Name").value = "";
-    document.getElementById("bezahlt").value = "";
-    calculateDistrebution();
-}
-
-function calculateDistrebution() {
+function claculateDistrebution() {
     document.getElementById("verteilung").innerHTML = "";
-    for (var i = 0; i < namen.length; i++) {
-        if (namen[i] != "deleted") {
-            var bekommt = [];
-            var aufteilung = bezahlungen[i] / (namen.length - deleted);
-            for (var j = 0; j < namen.length; j++) {
-                if (namen[j] != "deleted") {
-                    var wuerdeBekommen = bezahlungen[j] / (namen.length - deleted);
+    for (var i = 0; i < zPersonen.length; i++) {
+        if (!zPersonen[i].isDeleted()) {
+            var aufteilung = zPersonen[i].geld() / (zPersonen.length - deleted);
+            for (var j = 0; j < zPersonen.length; j++) {
+                if (!zPersonen[j].isDeleted()) {
+                    var wuerdeBekommen = zPersonen[j].geld() / (zPersonen.length - deleted);
                     var bezahlt = aufteilung - wuerdeBekommen;
                     if (bezahlt >= 0) {
-                        bekommt.push(Math.floor(100 * bezahlt) / 100);
+                        zPerson[i].bekommt.push(Math.floor(100 * bezahlt) / 100);
                     } else {
-                        bekommt.push(0);
+                        zPerson[i].bekommt.push(0);
                     }
                 } else {
-                    bekommt.push(null);
+                    zPerson[i].bekommt.push(null);
                 }
             }
-            document.getElementById("verteilung").innerHTML += "<tr id='" + namen[i] + "Line'><td>" + namen[i] + " hat " + bezahlungen[i] + " Euro bezahlt" + "</td > <td id='" + namen[i] + "'></td></tr > ";
+            document.getElementById("verteilung").innerHTML += "<tr id='" + zPersonen[i].name() + "Line'><td>" + zPersonen[i].name() + " hat " + zPersonen[i].geld() + " Euro bezahlt" + "</td > <td id='" + zPersonen[i].name() + "'></td></tr > ";
             for (var j = 0; j < namen.length; j++) {
-                if (namen[j] != "deleted") {
-                    if (namen[i] != namen[j]) {
-                        document.getElementById(namen[i]).innerHTML += namen[j] + ": " + bekommt[j] + " Euro <br/>";
+                if (zPersonen[j].name() != "deleted") {
+                    if (zPersonen[i].name() != zPersonen[j].name()) {
+                        document.getElementById(zPersonen[i].name()).innerHTML += zPersonen[j].name() + ": " + zPerson[i].bekommt[j] + " Euro <br/>";
                     }
                 }
             }
         }
     }
 }
+
 
 var personen = 1;
 function quickInputName() {

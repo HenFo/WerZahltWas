@@ -4,6 +4,8 @@ class Person {
     constructor(pName, pGeld) {
         this.name = pName;
         this.geld = parseFloat(pGeld);
+        this.bekommt = [];
+        this.deleted = false;
     }
 
     get name() {
@@ -12,6 +14,10 @@ class Person {
 
     get geld() {
         return this.geld;
+    }
+
+    get isDeleted() {
+        return this.deleted;
     }
 
     addGeld(pGeld) {
