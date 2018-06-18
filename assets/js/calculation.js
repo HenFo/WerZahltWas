@@ -1,5 +1,8 @@
 "use strict";
 
+/**
+ * fügt die Person mit dem was sie bezahlt hat der Liste hinzu
+ */
 var zPersonen = [];
 var zIds = 0;
 function add() {
@@ -24,6 +27,9 @@ function add() {
     calculateDistrebution();
 }
 
+/**
+ * berechnet die Verteilung bezüglich wer was wem schuldet
+ */
 function calculateDistrebution() {
     document.getElementById("verteilung").innerHTML = "";
     for (var i = 0; i < zPersonen.length; i++) {
@@ -56,12 +62,18 @@ function calculateDistrebution() {
     }
 }
 
-
+/**
+ * schnelle Eingabe für eine neue Peron
+ */
 var personen = 1;
 function quickInputName() {
     document.getElementById("Name").value = "Person " + personen++;
 }
 
+/**
+ * schnelle Eingabe für geld 
+ * @param {Intager} Geld
+ */
 function quickInputGeld(Geld) {
     if (document.getElementById("bezahlt").value != "") {
         document.getElementById("bezahlt").value = parseFloat(document.getElementById("bezahlt").value) + Geld;
@@ -96,6 +108,9 @@ function remove(namePos, InputId, geld) {
     }
 }
 
+/**
+ * resettet alle Parameter und das Layout
+ */
 function reset() {
     zPersonen = [];
     personen = 1;
@@ -121,6 +136,10 @@ window.onload = function() {
     });
 }
 
+/**
+ * nimmt eine String und fügt den Inhalt der Liste hinzu
+ * @param {String} data
+ */
 function convert(data) {
     var people = data.split(";")
     for (var i=0; i < people.length; i++) {
@@ -130,6 +149,9 @@ function convert(data) {
     }
 }
 
+/**
+ * nimmt die momentanen Eingaben und erzeugt daraus eine Datei zum wiederverwenden
+ */
 function saveToFile() {
     var str = "";
     for (var i = 0; i < zPersonen.length; i++) {
