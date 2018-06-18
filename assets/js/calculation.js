@@ -8,13 +8,15 @@ function add() {
     var i = 0, hVorhanden = false;
     while (i < zPersonen.length && !hVorhanden) {
         hVorhanden = hPerson.isEqual(zPersonen[i]);
+        i++;
     }
 
     if (!hVorhanden) {
-        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + hPerson.name() + " hat " + hPerson.geld() + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld() + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+        zPersonen.push(hPerson);
+        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + hPerson.name + " hat " + hPerson.geld + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
     } else {
         zPersonen[i].addGeld(document.getElementById("bezahlt").value);
-        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + zPersonen[i].name() + " hat noch " + hPerson.geld() + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld() + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + zPersonen[i].name + " hat noch " + hPerson.geld + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
     }
     zIds++;
     document.getElementById("Name").value = "";
@@ -22,29 +24,31 @@ function add() {
     calculateDistrebution();
 }
 
-function claculateDistrebution() {
+function calculateDistrebution() {
     document.getElementById("verteilung").innerHTML = "";
     for (var i = 0; i < zPersonen.length; i++) {
-        if (!zPersonen[i].isDeleted()) {
-            var aufteilung = zPersonen[i].geld() / (zPersonen.length - deleted);
+        if (!zPersonen[i].isDeleted) {
+            zPersonen[i].bekommt = [];
+            var personenUebrig = zPersonen.length - deleted;
+            var aufteilung = zPersonen[i].geld / personenUebrig;
             for (var j = 0; j < zPersonen.length; j++) {
-                if (!zPersonen[j].isDeleted()) {
-                    var wuerdeBekommen = zPersonen[j].geld() / (zPersonen.length - deleted);
+                if (!zPersonen[j].isDeleted) {
+                    var wuerdeBekommen = zPersonen[j].geld / personenUebrig;
                     var bezahlt = aufteilung - wuerdeBekommen;
                     if (bezahlt >= 0) {
-                        zPerson[i].bekommt.push(Math.floor(100 * bezahlt) / 100);
+                        zPersonen[i].bekommt.push(Math.floor(100 * bezahlt) / 100);
                     } else {
-                        zPerson[i].bekommt.push(0);
+                        zPersonen[i].bekommt.push(0);
                     }
                 } else {
-                    zPerson[i].bekommt.push(null);
+                    zPersonen[i].bekommt.push(null);
                 }
             }
-            document.getElementById("verteilung").innerHTML += "<tr id='" + zPersonen[i].name() + "Line'><td>" + zPersonen[i].name() + " hat " + zPersonen[i].geld() + " Euro bezahlt" + "</td > <td id='" + zPersonen[i].name() + "'></td></tr > ";
-            for (var j = 0; j < namen.length; j++) {
-                if (zPersonen[j].name() != "deleted") {
-                    if (zPersonen[i].name() != zPersonen[j].name()) {
-                        document.getElementById(zPersonen[i].name()).innerHTML += zPersonen[j].name() + ": " + zPerson[i].bekommt[j] + " Euro <br/>";
+            document.getElementById("verteilung").innerHTML += "<tr id='" + zPersonen[i].name + "Line'><td>" + zPersonen[i].name + " hat " + zPersonen[i].geld + " Euro bezahlt" + "</td > <td id='" + zPersonen[i].name + "'></td></tr > ";
+            for (var j = 0; j < zPersonen.length; j++) {
+                if (!zPersonen[j].isDeleted) {
+                    if (!zPersonen[i].isEqual(zPersonen[j])) {
+                        document.getElementById(zPersonen[i].name).innerHTML += zPersonen[j].name + ": " + zPersonen[i].bekommt[j] + " Euro <br/>";
                     }
                 }
             }
@@ -72,10 +76,11 @@ function quickInputGeld(Geld) {
  * @param {any} InputId ID des zu entfernenden Eintrags in der InputList
  * @param {Float} geld der zu entfernende Betrag
  */
+var deleted = 0;
 function remove(namePos, InputId, geld) {
     zPersonen[namePos].addGeld(-geld);
-    var name = zPersonen[namePos].name() + "Line";
-    if (zPersonen[namePos].geld() <= 0) {
+    var name = zPersonen[namePos].name + "Line";
+    if (zPersonen[namePos].geld <= 0) {
         zPersonen[namePos].delete();
     }
     var element = document.getElementById("list" + InputId);
@@ -124,9 +129,9 @@ function saveToFile() {
     var str = "";
     for (var i = 0; i < namen.length; i++) {
         if (i == namen.length - 1) {
-            str += zPersonen[i].name() + "," + zPersonen[i].geld();
+            str += zPersonen[i].name + "," + zPersonen[i].geld;
         } else {
-            str += zPersonen[i].name() + "," + zPersonen[i].geld() + ";";
+            str += zPersonen[i].name + "," + zPersonen[i].geld + ";";
         }
     }
 

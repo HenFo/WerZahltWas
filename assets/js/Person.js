@@ -2,8 +2,8 @@
 
 class Person {
     constructor(pName, pGeld) {
-        this._name = pName;
-        this._geld = parseFloat(pGeld);
+        this.name = pName;
+        this.geld = parseFloat(pGeld);
         this.bekommt = [];
         this.deleted = false;
     }
@@ -28,7 +28,7 @@ class Person {
         this._geld = pGeld;
     }
 
-    delet() {
+    delete() {
         this.deleted = true;
     }
 
@@ -37,7 +37,7 @@ class Person {
     }
 
     isEqual(pPerson) {
-        return pPerson.name() == this._name ? true : false;
+        return pPerson.name == this.name ? true : false;
     }
 
 }
