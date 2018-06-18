@@ -28,8 +28,8 @@ class Person {
         this._geld = pGeld;
     }
 
-    delete() {
-        this.deleted = true;
+    toggleDelete() {
+        this.deleted = !this.deleted;
     }
 
     addGeld(pGeld) {

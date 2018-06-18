@@ -18,9 +18,16 @@ function add() {
         zPersonen.push(hPerson);
         document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + hPerson.name + " hat " + hPerson.geld + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
     } else {
-        zPersonen[i].addGeld(document.getElementById("bezahlt").value);
-        document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + zPersonen[i].name + " hat noch " + hPerson.geld + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+        i--;
+        if (zPersonen[i].isDeleted) {
+            zPersonen[i].toggleDelete();
+        }
+        if (zPersonen[i].geld > 0) {
+            zPersonen[i].addGeld(document.getElementById("bezahlt").value);
+            document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + zPersonen[i].name + " hat noch " + hPerson.geld + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
+        }
     }
+
     zIds++;
     document.getElementById("Name").value = "";
     document.getElementById("bezahlt").value = "";
@@ -50,6 +57,7 @@ function calculateDistrebution() {
                     zPersonen[i].bekommt.push(null);
                 }
             }
+
             document.getElementById("verteilung").innerHTML += "<tr id='" + zPersonen[i].name + "Line'><td>" + zPersonen[i].name + " hat " + zPersonen[i].geld + " Euro bezahlt" + "</td > <td id='" + zPersonen[i].name + "'></td></tr > ";
             for (var j = 0; j < zPersonen.length; j++) {
                 if (!zPersonen[j].isDeleted) {
@@ -93,16 +101,17 @@ function remove(namePos, InputId, geld) {
     zPersonen[namePos].addGeld(-geld);
     var name = zPersonen[namePos].name + "Line";
     if (zPersonen[namePos].geld <= 0) {
-        zPersonen[namePos].delete();
+        zPersonen[namePos].toggleDelete();
+        deleted++;
     }
     var element = document.getElementById("list" + InputId);
     element.parentNode.removeChild(element);
     element = document.getElementById(name);
     element.parentNode.removeChild(element);
-    deleted++;
     if (deleted == zPersonen.length) {
         document.getElementById("verteilung").innerHTML = "";
         $("#tabelleVerteilung").hide();
+        zPersonen = [];
     } else {
         calculateDistrebution();
     }
