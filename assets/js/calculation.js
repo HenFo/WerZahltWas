@@ -88,7 +88,12 @@ function remove(namePos, InputId, geld) {
     element = document.getElementById(name);
     element.parentNode.removeChild(element);
     deleted++;
-    calculateDistrebution();
+    if (deleted == zPersonen.length) {
+        document.getElementById("verteilung").innerHTML = "";
+        $("#tabelleVerteilung").hide();
+    } else {
+        calculateDistrebution();
+    }
 }
 
 function reset() {
@@ -127,8 +132,8 @@ function convert(data) {
 
 function saveToFile() {
     var str = "";
-    for (var i = 0; i < namen.length; i++) {
-        if (i == namen.length - 1) {
+    for (var i = 0; i < zPersonen.length; i++) {
+        if (i == zPersonen.length - 1) {
             str += zPersonen[i].name + "," + zPersonen[i].geld;
         } else {
             str += zPersonen[i].name + "," + zPersonen[i].geld + ";";
