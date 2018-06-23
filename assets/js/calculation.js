@@ -22,10 +22,10 @@ function add() {
         if (zPersonen[i].isDeleted) {
             zPersonen[i].toggleDelete();
         }
-        if (zPersonen[i].geld > 0) {
+        //if (zPersonen[i].geld >= 0) {
             zPersonen[i].addGeld(document.getElementById("bezahlt").value);
             document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + zPersonen[i].name + " hat noch " + hPerson.geld + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
-        }
+        //}
     }
 
     zIds++;
