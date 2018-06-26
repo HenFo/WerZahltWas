@@ -182,7 +182,7 @@ function saveToFile() {
 
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(str));
-    element.setAttribute('download', 'Wer_Hat_Was_gezahlt.txt');
+    element.setAttribute('download', 'Wer_Hat_Was_gezahlt.wzw');
 
     element.style.display = 'none';
     document.body.appendChild(element);
