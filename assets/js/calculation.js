@@ -144,7 +144,6 @@ window.onload = function() {
         reader.onload = function (e) {
             var data = reader.result;
             convert(data);
-            calculateDistrebution();
             $("#tabelleVerteilung").show();
         }
         reader.readAsText(file);
@@ -156,12 +155,14 @@ window.onload = function() {
  * @param {String} data
  */
 function convert(data) {
-    var people = data.split(";")
+    var splitData = data.split("|");
+    var people = splitData[0].split(";");
     for (var i=0; i < people.length; i++) {
         document.getElementById("Name").value = people[i].split(",")[0];
         document.getElementById("bezahlt").value = people[i].split(",")[1];
         add();
     }
+    document.getElementById("verteilung").innerHTML = splitData[1];
 }
 
 /**
@@ -171,11 +172,13 @@ function saveToFile() {
     var str = "";
     for (var i = 0; i < zPersonen.length; i++) {
         if (i == zPersonen.length - 1) {
-            str += zPersonen[i].name + "," + zPersonen[i].geld;
+            str += zPersonen[i].name + "," + zPersonen[i].geld + "|";
         } else {
             str += zPersonen[i].name + "," + zPersonen[i].geld + ";";
         }
     }
+
+    str += document.getElementById("verteilung").innerHTML;
 
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(str));
