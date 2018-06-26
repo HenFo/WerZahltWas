@@ -3,6 +3,11 @@
   margin-top:10px;
 }
 
+.listText {
+    margin-bottom:-10px;
+    text-decoration:none;
+}
+
 .btn-group, .btn-group-vertical {
   margin:10px;
 }
