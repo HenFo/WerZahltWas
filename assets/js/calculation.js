@@ -22,10 +22,8 @@ function add() {
         if (zPersonen[i].isDeleted) {
             zPersonen[i].toggleDelete();
         }
-        //if (zPersonen[i].geld >= 0) {
             zPersonen[i].addGeld(document.getElementById("bezahlt").value);
             document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + zPersonen[i].name + " hat noch " + hPerson.geld + " Euro bezahlt <button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
-        //}
     }
 
     zIds++;
@@ -62,7 +60,7 @@ function calculateDistrebution() {
             for (var j = 0; j < zPersonen.length; j++) {
                 if (!zPersonen[j].isDeleted) {
                     if (!zPersonen[i].isEqual(zPersonen[j])) {
-                        document.getElementById(zPersonen[i].name).innerHTML += zPersonen[j].name + ": " + zPersonen[i].bekommt[j] + " Euro <br/>";
+                        document.getElementById(zPersonen[i].name).innerHTML += "<p style='text-decoration:none;' class='listText' onclick='togglePayed(this)'>" + zPersonen[j].name + ": " + zPersonen[i].bekommt[j] + " Euro </p> <br/>";
                     }
                 }
             }
@@ -87,6 +85,14 @@ function quickInputGeld(Geld) {
         document.getElementById("bezahlt").value = parseFloat(document.getElementById("bezahlt").value) + Geld;
     } else {
         document.getElementById("bezahlt").value = Geld;
+    }
+}
+
+function togglePayed(elem) {
+    if (elem.style.textDecoration == "none") {
+        elem.style.textDecoration = "line-through";
+    } else {
+        elem.style.textDecoration = "none";
     }
 }
 
