@@ -15,6 +15,9 @@ function add() {
     }
 
     if (!hVorhanden) {
+        if (hPerson.geld == 0) {
+            hPerson.toggleHas0();
+        }
         zPersonen.push(hPerson);
         document.getElementById("inputList").innerHTML += "<div class='inputList' id='list" + zIds + "'>" + hPerson.name + " hat " + hPerson.geld + " Euro bezahlt" + "<button class='btn remove' onclick = 'remove(" + i + "," + zIds + "," + hPerson.geld + ")' type = 'button'><i class='fa fa-close'></i></button><br></div>";
     } else {
@@ -106,9 +109,11 @@ var deleted = 0;
 function remove(namePos, InputId, geld) {
     zPersonen[namePos].addGeld(-geld);
     var name = zPersonen[namePos].name + "Line";
-    if (zPersonen[namePos].geld <= 0) {
+    if (!zPersonen[namePos].has0) {
         zPersonen[namePos].toggleDelete();
         deleted++;
+    } else {
+        zPersonen[namePos].toggleHas0();
     }
     var element = document.getElementById("list" + InputId);
     element.parentNode.removeChild(element);
